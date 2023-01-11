@@ -1,0 +1,13 @@
+{
+  "references": [
+    {
+      "path": "./advanced_types"
+    }
+  ],
+  "files": [],
+  "include": [],
+  "exclude": [
+    "node_modules",
+    "**/dist/**"
+  ]
+}

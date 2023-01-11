@@ -1,0 +1,18 @@
+{
+  "name": "typescript",
+  "version": "1.0.0",
+  "author": "Ramzi <ramzi.hannachi1991@gmail.com>",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "advanced_types"
+  ],
+  "engines": {
+    "npm": ">=8.5.5",
+    "node": ">=16.15.0"
+  },
+  "devDependencies": {
+    "lite-server": "^2.6.1",
+    "typescript": "^4.9.4"
+  }
+}
