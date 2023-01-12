@@ -1,4 +1,6 @@
-
+/**
+ * Generic Classes
+ */
 
 class DataStorage<T extends string | number | boolean> {
     private data: T[] = [];

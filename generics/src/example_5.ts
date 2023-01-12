@@ -1,3 +1,6 @@
+/**
+ * Generic Utility Types
+ */
 
 interface CourseGoal {
   title: string;

@@ -1,4 +1,6 @@
-
+/**
+ * Generic Function
+ */
 
 interface Lengthy {
     length: number;
