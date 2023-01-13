@@ -2,6 +2,12 @@
   "references": [
     {
       "path": "./advanced_types"
+    },
+    {
+      "path": "./decorators"
+    },
+    {
+      "path": "./generics"
     }
   ],
   "files": [],

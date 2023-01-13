@@ -1,11 +1,12 @@
 {
   "private": true,
   "name": "decorators",
-  "version": "1.1.2",
+  "version": "1.0.0",
   "author": "Ramzi <ramzi.hannachi1991@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --watch",
-    "dev": "lite-server"
+    "build": "tsc --build --force -w",
+    "copy-files": "copyfiles --error --up 1 src/*/*.html dist",
+    "dev-example-4": "lite-server --baseDir='dist/example4' "
   }
 }
