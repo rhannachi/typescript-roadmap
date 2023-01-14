@@ -19,6 +19,3 @@ console.log('example 5');
 console.log({ createCourseGoal: createCourseGoal('my title', 'my description') })
 console.log();
 
-const names: Readonly<string[]> = ['Max', 'Anna'];
-// names.push('Manu'); // => error
-// names.pop(); // => error

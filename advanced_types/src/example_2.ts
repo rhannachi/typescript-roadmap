@@ -15,3 +15,7 @@ const u1: Universal = 8;
 console.log('Example 2')
 console.log({ u1 })
 console.log()
+
+const names: Readonly<string[]> = ['Max', 'Anna'];
+// names.push('Manu'); // => error
+// names.pop(); // => error
