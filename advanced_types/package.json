@@ -5,7 +5,13 @@
   "author": "Ramzi <ramzi.hannachi1991@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "build": "tsc --watch",
-    "dev": "lite-server"
+    "build": "tsc --build --force -w",
+    "copy-files": "copyfiles --error --up 1 src/*/*.html dist",
+    "dev-1": "lite-server --baseDir='dist/example-1'",
+    "dev-2": "lite-server --baseDir='dist/example-2'",
+    "dev-3": "lite-server --baseDir='dist/example-3'",
+    "dev-4": "lite-server --baseDir='dist/example-4'",
+    "dev-5": "lite-server --baseDir='dist/example-5'",
+    "dev-6": "lite-server --baseDir='dist/example-6'"
   }
 }
