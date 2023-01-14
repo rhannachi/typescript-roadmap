@@ -1,3 +1,6 @@
+/**
+ * Validation with Decorators
+ */
 
 interface ValidatorConfig {
     // ['required', 'positive']

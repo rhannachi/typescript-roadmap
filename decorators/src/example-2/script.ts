@@ -30,6 +30,6 @@ class PersonA {
   }
 }
 
-const personA = new Person();
+const personA = new PersonA();
 
 console.log({ personA });
