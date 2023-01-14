@@ -1,11 +1,13 @@
 {
-  "name": "typescript",
+  "name": "typescript-roadmap",
   "version": "1.0.0",
   "author": "Ramzi <ramzi.hannachi1991@gmail.com>",
   "license": "MIT",
   "private": true,
   "workspaces": [
-    "advanced_types"
+    "advanced_types",
+    "generics",
+    "decorators"
   ],
   "engines": {
     "npm": ">=8.5.5",
