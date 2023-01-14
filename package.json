@@ -5,6 +5,7 @@
   "license": "MIT",
   "private": true,
   "workspaces": [
+    "classes-interfaces",
     "advanced_types",
     "generics",
     "decorators"
