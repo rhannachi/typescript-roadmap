@@ -1,7 +1,7 @@
 {
   "references": [
     {
-      "path": "./advanced_types"
+      "path": "./advanced-types"
     },
     {
       "path": "./decorators"

@@ -7,6 +7,6 @@ $ npm i
 ```
 
 ### Examples
-[Advanced Types](./advanced_types)\
+[Advanced Types](./advanced-types)\
 [Generics](./generics)\
 [Decorators](./decorators)
