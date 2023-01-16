@@ -2,11 +2,6 @@
  *  Property Decorators
  */
 
-// function logCustom(value: object | string, color: 'red' | 'green' | 'yellow', background: 'red' | 'green' | 'yellow' | 'white' = 'white') {
-//     console.log('%c' + JSON.stringify(value), `color: ${color}; background: ${background}; font-size: 30px`);
-// }
-
-
 function Log(target: any, propertyName: string | Symbol) {
     console.log('Property decorator!', { target, propertyName });
 }
