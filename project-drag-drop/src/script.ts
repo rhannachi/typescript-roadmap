@@ -1,3 +1,15 @@
+// -------------------------- Decorators ------------------------
+
+const autoBind = (_target: any, _methodName: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
+    return  {
+        configurable: true,
+        get() {
+            return descriptor.value.bind(this);
+        }
+    };
+}
+
+// -------------------------- State Management ------------------
 
 // -------------------------- Validator ------------------------
 
@@ -36,18 +48,37 @@ const validate = (validatableInput: Validatable) => {
     return isValid;
 }
 
-// -------------------------- Decorators ------------------------
+// -------------------------- Project List ------------------------
 
-const autoBind = (_target: any, _methodName: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
-    return  {
-        configurable: true,
-        get() {
-            return descriptor.value.bind(this);
-        }
-    };
+class ProjectList {
+    private readonly type: 'active' | 'finished'
+    templateElement: HTMLTemplateElement;
+    hostElement: HTMLDivElement;
+    element: HTMLElement;
+
+    constructor(type: 'active' | 'finished') {
+        this.type = type
+        this.templateElement = <HTMLTemplateElement>document.getElementById('project-list');
+        this.hostElement = <HTMLDivElement>document.getElementById('app');
+
+        const importedNode = document.importNode(this.templateElement.content, true);
+        this.element = <HTMLElement>importedNode.firstElementChild;
+        this.element.id = `${this.type}-projects`;
+        this.attach();
+        this.renderContent();
+    }
+
+    private renderContent() {
+        this.element.querySelector('ul')!.id = `${this.type}-projects-list`;
+        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
+    }
+
+    private attach() {
+        this.hostElement.insertAdjacentElement('beforeend', this.element);
+    }
 }
 
-// -------------------------- Main ------------------------
+// -------------------------- Project Input ------------------------
 
 class ProjectInput {
     templateElement: HTMLTemplateElement;
@@ -130,4 +161,8 @@ class ProjectInput {
     }
 }
 
+// -------------------------- Main ------------------------
+
 new ProjectInput();
+new ProjectList('active');
+new ProjectList('finished');
