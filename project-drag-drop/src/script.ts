@@ -46,7 +46,7 @@ const validate = (validatableInput: Validatable) => {
     return isValid;
 }
 
-// -------------------------- State Management ------------------
+// -------------------------- ProjectState Management ------------------
 
 enum ProjectStatus {
     Active,
@@ -63,27 +63,31 @@ class Project {
     ) {}
 }
 
-// Project State Management
-type Listener = (projects: Project[]) => void;
+// Project ProjectState Management
+type Listener<T> = (items: T[]) => void;
 
-class State {
-    private listeners: Listener[] = [];
+class State<T> {
+    protected listeners: Listener<T>[] = [];
+
+    addListener(listenerFn: Listener<T>) {
+        this.listeners.push(listenerFn);
+    }
+}
+
+class ProjectState extends State<Project>{
     private projects: Project[] = [];
-    private static instance: State;
+    private static instance: ProjectState;
 
-    // private constructor() {}
+    private constructor() {
+        super()
+    }
 
     static getInstance() {
         if (this.instance) {
             return this.instance;
         }
-        this.instance = new State();
+        this.instance = new ProjectState();
         return this.instance;
-    }
-
-    // subscribe to Events
-    addListener(listenerFn: Listener) {
-        this.listeners.push(listenerFn);
     }
 
     //
@@ -106,7 +110,7 @@ class State {
     }
 }
 
-const projectState = State.getInstance();
+const projectState = ProjectState.getInstance();
 
 // ---------------- Base Component ---------------
 
@@ -181,28 +185,30 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
 
 // -------------------------- Project Input ------------------------
 
-class ProjectInput {
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    element: HTMLFormElement;
+class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
     peopleInputElement: HTMLInputElement;
     constructor() {
-        this.templateElement = <HTMLTemplateElement>document.getElementById('project-input')
-        this.hostElement = <HTMLDivElement>document.getElementById('app');
-
-        const importedNode = document.importNode(this.templateElement.content,true);
-        this.element = <HTMLFormElement>importedNode.firstElementChild;
-        this.element.id = 'user-input';
+        super('project-input', 'app', true, 'user-input')
+        // this.templateElement = <HTMLTemplateElement>document.getElementById('project-input')
+        // this.hostElement = <HTMLDivElement>document.getElementById('app');
+        //
+        // const importedNode = document.importNode(this.templateElement.content,true);
+        // this.element = <HTMLFormElement>importedNode.firstElementChild;
+        // this.element.id = 'user-input';
 
         this.titleInputElement = <HTMLInputElement>this.element.querySelector('#title');
         this.descriptionInputElement = <HTMLInputElement>this.element.querySelector('#description');
         this.peopleInputElement = <HTMLInputElement>this.element.querySelector('#people');
 
         this.configure();
-        this.attach();
     }
+
+    configure() {
+        this.element.addEventListener('submit', this.submitHandler);
+    }
+    renderContent() {}
 
     private gatherUserInput(): [string, string, number] | void {
         const enteredTitle = this.titleInputElement.value;
@@ -236,9 +242,9 @@ class ProjectInput {
     }
 
 
-    private attach() {
-        this.hostElement.insertAdjacentElement('afterbegin', this.element);
-    }
+    // private attach() {
+    //     this.hostElement.insertAdjacentElement('afterbegin', this.element);
+    // }
 
     private clearInputs() {
         this.titleInputElement.value = '';
@@ -255,10 +261,6 @@ class ProjectInput {
             projectState.addProject(title, desc, people);
             this.clearInputs();
         }
-    }
-
-    private configure() {
-        this.element.addEventListener('submit', this.submitHandler);
     }
 }
 
