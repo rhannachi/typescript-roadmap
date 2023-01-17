@@ -9,6 +9,43 @@ const autoBind = (_target: any, _methodName: string, descriptor: PropertyDescrip
     };
 }
 
+// -------------------------- Validator ------------------------
+
+interface Validatable {
+    value: string | number;
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    min?: number;
+    max?: number;
+}
+
+const validate = (validatableInput: Validatable) => {
+    let isValid = true;
+
+    // check required
+    if (validatableInput.required) {
+        isValid = isValid && validatableInput.value.toString().trim().length !== 0;
+    }
+    // check min Length
+    if (!!validatableInput.minLength && typeof validatableInput.value === 'string') {
+        isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
+    }
+    // check max length
+    if (!!validatableInput.maxLength && typeof validatableInput.value === 'string') {
+        isValid = isValid && validatableInput.value.length <= validatableInput.maxLength;
+    }
+    // check min
+    if (!!validatableInput.min && typeof validatableInput.value === 'number') {
+        isValid = isValid && validatableInput.value >= validatableInput.min;
+    }
+    // check max
+    if (!!validatableInput.max && typeof validatableInput.value === 'number') {
+        isValid = isValid && validatableInput.value <= validatableInput.max;
+    }
+    return isValid;
+}
+
 // -------------------------- State Management ------------------
 
 enum ProjectStatus {
@@ -71,76 +108,64 @@ class State {
 
 const projectState = State.getInstance();
 
-// -------------------------- Validator ------------------------
+// ---------------- Base Component ---------------
 
-interface Validatable {
-    value: string | number;
-    required?: boolean;
-    minLength?: number;
-    maxLength?: number;
-    min?: number;
-    max?: number;
+abstract class Component<T extends HTMLElement, U extends HTMLElement> {
+    templateElement: HTMLTemplateElement;
+    hostElement: T;
+    element: U;
+
+    protected constructor(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string) {
+        this.templateElement = <HTMLTemplateElement>document.getElementById(templateId);
+        this.hostElement = <T>document.getElementById(hostElementId);
+
+        const importedNode = document.importNode(this.templateElement.content,true);
+        this.element = <U>importedNode.firstElementChild;
+        if (newElementId) {
+            this.element.id = newElementId;
+        }
+
+        this.attach(insertAtStart);
+    }
+
+    private attach(insertAtBeginning: boolean) {
+        this.hostElement.insertAdjacentElement(insertAtBeginning ? 'afterbegin' : 'beforeend', this.element);
+    }
+
+    abstract configure(): void;
+    abstract renderContent(): void;
 }
 
-const validate = (validatableInput: Validatable) => {
-    let isValid = true;
-
-    // check required
-    if (validatableInput.required) {
-        isValid = isValid && validatableInput.value.toString().trim().length !== 0;
-    }
-    // check min Length
-    if (!!validatableInput.minLength && typeof validatableInput.value === 'string') {
-        isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
-    }
-    // check max length
-    if (!!validatableInput.maxLength && typeof validatableInput.value === 'string') {
-        isValid = isValid && validatableInput.value.length <= validatableInput.maxLength;
-    }
-    // check min
-    if (!!validatableInput.min && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value >= validatableInput.min;
-    }
-    // check max
-    if (!!validatableInput.max && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value <= validatableInput.max;
-    }
-    return isValid;
-}
 
 // -------------------------- Project List ------------------------
 
-class ProjectList {
+class ProjectList extends Component<HTMLDivElement, HTMLElement>{
     private readonly type: 'active' | 'finished'
-    templateElement: HTMLTemplateElement;
-    hostElement: HTMLDivElement;
-    element: HTMLElement;
     assignedProjects: Project[] = [];
 
     constructor(type: 'active' | 'finished') {
+        super('project-list', 'app', false, `${type}-projects`);
         this.type = type
-        this.templateElement = <HTMLTemplateElement>document.getElementById('project-list');
-        this.hostElement = <HTMLDivElement>document.getElementById('app');
 
-        const importedNode = document.importNode(this.templateElement.content, true);
-        this.element = <HTMLElement>importedNode.firstElementChild;
-        this.element.id = `${this.type}-projects`;
+        this.configure();
+        this.renderContent();
+    }
 
+    configure() {
         projectState.addListener((projects: Project[]) => {
-
-            const relevantProjects = projects.filter(project => {
+            this.assignedProjects = projects.filter(project => {
                 if (this.type === 'active') {
                     return project.status === ProjectStatus.Active;
                 }
                 return project.status === ProjectStatus.Finished;
             });
-
-            this.assignedProjects = relevantProjects;
             this.renderProjects();
         });
+    }
 
-        this.attach();
-        this.renderContent();
+    renderContent() {
+        this.element.querySelector('ul')!.id = `${this.type}-projects-list`;
+        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
     }
 
     private renderProjects() {
@@ -151,15 +176,6 @@ class ProjectList {
             listItem.textContent = prjItem.title;
             listEl.appendChild(listItem)
         }
-    }
-
-    private renderContent() {
-        this.element.querySelector('ul')!.id = `${this.type}-projects-list`;
-        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
-    }
-
-    private attach() {
-        this.hostElement.insertAdjacentElement('beforeend', this.element);
     }
 }
 
