@@ -1,14 +1,5 @@
-// autoBind decorator
-function autoBind(_target: any, _methodName: string, descriptor: PropertyDescriptor) {
-    return  {
-        configurable: true,
-        get() {
-            return descriptor.value.bind(this);
-        }
-    };
-}
-
-// --------------------------------------------------
+import { autoBind } from "./decorators";
+import { Validatable, validate } from "./validator";
 
 class ProjectInput {
     templateElement: HTMLTemplateElement;
@@ -38,15 +29,31 @@ class ProjectInput {
         const enteredDescription = this.descriptionInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
 
+        const titleValidatable: Validatable = {
+            value: enteredTitle,
+            required: true
+        };
+        const descriptionValidatable: Validatable = {
+            value: enteredDescription,
+            required: true,
+            minLength: 5
+        };
+        const peopleValidatable: Validatable = {
+            value: +enteredPeople,
+            required: true,
+            min: 1,
+            max: 5
+        };
+
         if (
-            enteredTitle.trim().length === 0 ||
-            enteredDescription.trim().length === 0 ||
-            enteredPeople.trim().length === 0
+            !validate(titleValidatable) ||
+            !validate(descriptionValidatable) ||
+            !validate(peopleValidatable)
         ) {
             alert('Invalid input, please try again!');
             return;
         } else {
-            return [enteredTitle, enteredDescription, Number(enteredPeople)];
+            return [enteredTitle, enteredDescription, +enteredPeople];
         }
     }
 
@@ -77,4 +84,4 @@ class ProjectInput {
     }
 }
 
-const prjInput = new ProjectInput();
+new ProjectInput();
