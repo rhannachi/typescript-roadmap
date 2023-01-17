@@ -1,5 +1,53 @@
-import { autoBind } from "./decorators";
-import { Validatable, validate } from "./validator";
+
+// -------------------------- Validator ------------------------
+
+interface Validatable {
+    value: string | number;
+    required?: boolean;
+    minLength?: number;
+    maxLength?: number;
+    min?: number;
+    max?: number;
+}
+
+const validate = (validatableInput: Validatable) => {
+    let isValid = true;
+
+    // check required
+    if (validatableInput.required) {
+        isValid = isValid && validatableInput.value.toString().trim().length !== 0;
+    }
+    // check min Length
+    if (!!validatableInput.minLength && typeof validatableInput.value === 'string') {
+        isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
+    }
+    // check max length
+    if (!!validatableInput.maxLength && typeof validatableInput.value === 'string') {
+        isValid = isValid && validatableInput.value.length <= validatableInput.maxLength;
+    }
+    // check min
+    if (!!validatableInput.min && typeof validatableInput.value === 'number') {
+        isValid = isValid && validatableInput.value >= validatableInput.min;
+    }
+    // check max
+    if (!!validatableInput.max && typeof validatableInput.value === 'number') {
+        isValid = isValid && validatableInput.value <= validatableInput.max;
+    }
+    return isValid;
+}
+
+// -------------------------- Decorators ------------------------
+
+const autoBind = (_target: any, _methodName: string, descriptor: PropertyDescriptor): PropertyDescriptor => {
+    return  {
+        configurable: true,
+        get() {
+            return descriptor.value.bind(this);
+        }
+    };
+}
+
+// -------------------------- Main ------------------------
 
 class ProjectInput {
     templateElement: HTMLTemplateElement;
@@ -45,11 +93,9 @@ class ProjectInput {
             max: 5
         };
 
-        if (
-            !validate(titleValidatable) ||
-            !validate(descriptionValidatable) ||
-            !validate(peopleValidatable)
-        ) {
+        const isValid = !validate(titleValidatable) || !validate(descriptionValidatable) || !validate(peopleValidatable)
+
+        if (isValid) {
             alert('Invalid input, please try again!');
             return;
         } else {
