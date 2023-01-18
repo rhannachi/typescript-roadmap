@@ -121,25 +121,43 @@ abstract class Component<T extends HTMLElement, U extends HTMLElement> {
 
     protected constructor(templateId: string, hostElementId: string, insertAtStart: boolean, newElementId?: string) {
         this.templateElement = <HTMLTemplateElement>document.getElementById(templateId);
-        this.hostElement = <T>document.getElementById(hostElementId);
 
-        const importedNode = document.importNode(this.templateElement.content,true);
-        this.element = <U>importedNode.firstElementChild;
+        this.element = <U>document.importNode(this.templateElement.content,true).firstElementChild
         if (newElementId) {
             this.element.id = newElementId;
         }
 
-        this.attach(insertAtStart);
-    }
+        this.hostElement = <T>document.getElementById(hostElementId);
+        this.hostElement.insertAdjacentElement(insertAtStart ? 'afterbegin' : 'beforeend', this.element);
 
-    private attach(insertAtBeginning: boolean) {
-        this.hostElement.insertAdjacentElement(insertAtBeginning ? 'afterbegin' : 'beforeend', this.element);
     }
 
     abstract configure(): void;
     abstract renderContent(): void;
 }
 
+// ----------------- Project Item ----------------
+
+// ProjectItem Class
+class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
+    private project: Project;
+
+    constructor(hostId: string, project: Project) {
+        super('single-project', hostId, false, project.id);
+        this.project = project;
+
+        this.configure();
+        this.renderContent();
+    }
+
+    configure() {}
+
+    renderContent() {
+        this.element.querySelector('h2')!.textContent = this.project.title;
+        this.element.querySelector('h3')!.textContent = this.project.people.toString();
+        this.element.querySelector('p')!.textContent = this.project.description;
+    }
+}
 
 // -------------------------- Project List ------------------------
 
@@ -174,11 +192,10 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
 
     private renderProjects() {
         const listEl = <HTMLUListElement>document.getElementById(`${this.type}-projects-list`);
-        listEl.innerHTML = ''
-        for (const prjItem of this.assignedProjects) {
-            const listItem = document.createElement('li');
-            listItem.textContent = prjItem.title;
-            listEl.appendChild(listItem)
+        listEl.innerHTML = '';
+        for (const project of this.assignedProjects) {
+            const hostId = this.element.querySelector('ul')!.id
+            new ProjectItem(hostId, project);
         }
     }
 }
@@ -240,11 +257,6 @@ class ProjectInput extends Component<HTMLDivElement, HTMLFormElement>{
             return [enteredTitle, enteredDescription, +enteredPeople];
         }
     }
-
-
-    // private attach() {
-    //     this.hostElement.insertAdjacentElement('afterbegin', this.element);
-    // }
 
     private clearInputs() {
         this.titleInputElement.value = '';
