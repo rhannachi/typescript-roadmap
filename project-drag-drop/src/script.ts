@@ -67,6 +67,12 @@ type Listener<T> = (items: T[]) => void;
 class State<T> {
     protected listeners: Listener<T>[] = [];
 
+    emitEvents(items: T[]) {
+        for (const listenerFn of this.listeners) {
+            listenerFn([...items]);
+        }
+    }
+
     receiveEvents(listenerFn: Listener<T>) {
         this.listeners.push(listenerFn);
     }
@@ -88,13 +94,6 @@ class ProjectState extends State<Project>{
         return this.instance;
     }
 
-    //
-    private emitEvents() {
-        for (const listenerFn of this.listeners) {
-            listenerFn([...this.projects]);
-        }
-    }
-
     addProject(title: string, description: string, numOfPeople: number) {
         this.projects.push(new Project(
             Math.random().toString(),
@@ -104,7 +103,7 @@ class ProjectState extends State<Project>{
             'active'
         ));
 
-        this.emitEvents()
+        this.emitEvents(this.projects)
     }
 }
 
