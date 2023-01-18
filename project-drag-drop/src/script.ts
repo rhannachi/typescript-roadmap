@@ -174,13 +174,9 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
     }
 
     configure() {
+        // TODO rename registerEvents
         projectState.addListener((projects: Project[]) => {
-            this.assignedProjects = projects.filter(project => {
-                if (this.type === 'active') {
-                    return project.status === ProjectStatus.Active;
-                }
-                return project.status === ProjectStatus.Finished;
-            });
+            this.assignedProjects = this.filterProjects(projects, this.type)
             this.renderProjects();
         });
     }
@@ -188,6 +184,15 @@ class ProjectList extends Component<HTMLDivElement, HTMLElement>{
     renderContent() {
         this.element.querySelector('ul')!.id = `${this.type}-projects-list`;
         this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
+    }
+
+    private filterProjects(projects:Project[], type: 'active' | 'finished'): Project[] {
+        return projects.filter(project => {
+            if (type === 'active') {
+                return project.status === ProjectStatus.Active;
+            }
+            return project.status === ProjectStatus.Finished;
+        });
     }
 
     private renderProjects() {
