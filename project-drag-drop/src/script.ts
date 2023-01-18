@@ -48,10 +48,8 @@ const validate = (validatableInput: Validatable) => {
 
 // -------------------------- ProjectState Management ------------------
 
-enum ProjectStatus {
-    Active,
-    Finished
-}
+const STATUS = ['active', 'finished'] as const
+type ProjectStatus = typeof STATUS[number]
 
 class Project {
     constructor(
@@ -69,7 +67,7 @@ type Listener<T> = (items: T[]) => void;
 class State<T> {
     protected listeners: Listener<T>[] = [];
 
-    addListener(listenerFn: Listener<T>) {
+    receiveEvents(listenerFn: Listener<T>) {
         this.listeners.push(listenerFn);
     }
 }
@@ -103,7 +101,7 @@ class ProjectState extends State<Project>{
             title,
             description,
             numOfPeople,
-            ProjectStatus.Active
+            'active'
         ));
 
         this.emitEvents()
@@ -162,41 +160,40 @@ class ProjectItem extends Component<HTMLUListElement, HTMLLIElement> {
 // -------------------------- Project List ------------------------
 
 class ProjectList extends Component<HTMLDivElement, HTMLElement>{
-    private readonly type: 'active' | 'finished'
+    private readonly status: ProjectStatus
     assignedProjects: Project[] = [];
 
-    constructor(type: 'active' | 'finished') {
-        super('project-list', 'app', false, `${type}-projects`);
-        this.type = type
+    constructor(status: ProjectStatus) {
+        super('project-list', 'app', false, `${status}-projects`);
+        this.status = status
 
         this.configure();
         this.renderContent();
     }
 
     configure() {
-        // TODO rename registerEvents
-        projectState.addListener((projects: Project[]) => {
-            this.assignedProjects = this.filterProjects(projects, this.type)
+        projectState.receiveEvents((receivedProjects: Project[]) => {
+            this.assignedProjects = this.filterProjects(receivedProjects, this.status)
             this.renderProjects();
         });
     }
 
     renderContent() {
-        this.element.querySelector('ul')!.id = `${this.type}-projects-list`;
-        this.element.querySelector('h2')!.textContent = this.type.toUpperCase() + ' PROJECTS';
+        this.element.querySelector('ul')!.id = `${this.status}-projects-list`;
+        this.element.querySelector('h2')!.textContent = this.status.toUpperCase() + ' PROJECTS';
     }
 
-    private filterProjects(projects:Project[], type: 'active' | 'finished'): Project[] {
+    private filterProjects(projects:Project[], status: ProjectStatus): Project[] {
         return projects.filter(project => {
-            if (type === 'active') {
-                return project.status === ProjectStatus.Active;
+            if (status === 'active') {
+                return project.status === 'active';
             }
-            return project.status === ProjectStatus.Finished;
+            return project.status === 'finished';
         });
     }
 
     private renderProjects() {
-        const listEl = <HTMLUListElement>document.getElementById(`${this.type}-projects-list`);
+        const listEl = <HTMLUListElement>document.getElementById(`${this.status}-projects-list`);
         listEl.innerHTML = '';
         for (const project of this.assignedProjects) {
             const hostId = this.element.querySelector('ul')!.id
