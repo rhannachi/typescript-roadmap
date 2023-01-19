@@ -1,5 +1,9 @@
-export interface Validatable {
-    value: string | number;
+export interface ValidationForm {
+    fieldsValidator: FieldsValidatorRules | undefined
+    setFieldsValidator(fieldValidators: FieldsValidatorRules): void
+}
+
+export interface ValidatorRules {
     required?: boolean;
     minLength?: number;
     maxLength?: number;
@@ -7,28 +11,42 @@ export interface Validatable {
     max?: number;
 }
 
-export const validate = (validatableInput: Validatable) => {
+export type FieldsValidatorRules = {
+    [field: string]: ValidatorRules;
+}
+
+export function validate<T extends Record<string, any>, U extends FieldsValidatorRules>(values: T, fieldsValidator: U | undefined) {
+    if (!fieldsValidator) {
+        return true;
+    }
+
     let isValid = true;
 
-    // check required
-    if (validatableInput.required) {
-        isValid = isValid && validatableInput.value.toString().trim().length !== 0;
+    for (const [prop, validators] of Object.entries(fieldsValidator)) {
+
+        const value = values[prop]
+
+        // check required
+        if (validators.required) {
+            isValid = isValid && value.toString().trim().length !== 0;
+        }
+        // check min Length
+        if (!!validators.minLength && typeof value === 'string') {
+            isValid = isValid && value.length >= validators.minLength;
+        }
+        // check max length
+        if (!!validators.maxLength && typeof value === 'string') {
+            isValid = isValid && value.length <= validators.maxLength;
+        }
+        // check min
+        if (!!validators.min && typeof value === 'number') {
+            isValid = isValid && value >= validators.min;
+        }
+        // check max
+        if (!!validators.max && typeof value === 'number') {
+            isValid = isValid && value <= validators.max;
+        }
     }
-    // check min Length
-    if (!!validatableInput.minLength && typeof validatableInput.value === 'string') {
-        isValid = isValid && validatableInput.value.length >= validatableInput.minLength;
-    }
-    // check max length
-    if (!!validatableInput.maxLength && typeof validatableInput.value === 'string') {
-        isValid = isValid && validatableInput.value.length <= validatableInput.maxLength;
-    }
-    // check min
-    if (!!validatableInput.min && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value >= validatableInput.min;
-    }
-    // check max
-    if (!!validatableInput.max && typeof validatableInput.value === 'number') {
-        isValid = isValid && validatableInput.value <= validatableInput.max;
-    }
+
     return isValid;
 }

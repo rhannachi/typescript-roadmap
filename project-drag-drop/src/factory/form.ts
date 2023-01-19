@@ -1,13 +1,25 @@
 import { Component } from "./component.js";
-import {ID_HOST_ELEMENT, ID_TASK_FORM, ID_TASK_FORM_TEMPLATE, Validatable, validate} from "../utils/index.js";
-import { autoBind } from "../decorators/auto-bind.js";
+import {
+    FieldsValidatorRules,
+    ID_HOST_ELEMENT,
+    ID_TASK_FORM,
+    ID_TASK_FORM_TEMPLATE,
+    validate, ValidationForm,
+} from "../utils/index.js";
+import { AddValidationRules, AutoBind } from "../decorators/index.js";
 import { Subject } from "../observers/index.js";
 import { TaskModel } from "../models/index.js";
 
-export class Form extends Component<HTMLDivElement, HTMLFormElement>{
+export class Form extends Component<HTMLDivElement, HTMLFormElement> implements ValidationForm {
+    fieldsValidator: FieldsValidatorRules | undefined
+
+    @AddValidationRules({required: true})
     titleInputElement: HTMLInputElement;
+    @AddValidationRules({required: true, minLength: 5})
     descriptionInputElement: HTMLInputElement;
+    @AddValidationRules({required: true, min: 1, max: 5})
     peopleInputElement: HTMLInputElement;
+
     constructor(subject: Subject<TaskModel>) {
         super(ID_TASK_FORM_TEMPLATE, ID_HOST_ELEMENT, true, ID_TASK_FORM)
 
@@ -18,6 +30,15 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement>{
         this.peopleInputElement = <HTMLInputElement>this.element.querySelector('#people');
 
         this.configure();
+
+        console.log('fieldsValidator:', this.fieldsValidator)
+    }
+
+    setFieldsValidator(fieldValidators: FieldsValidatorRules) {
+        this.fieldsValidator = {
+            ...this.fieldsValidator,
+            ...fieldValidators
+        };
     }
 
     configure() {
@@ -30,23 +51,12 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement>{
         const enteredDescription = this.descriptionInputElement.value;
         const enteredPeople = this.peopleInputElement.value;
 
-        const titleValidatable: Validatable = {
-            value: enteredTitle,
-            required: true
-        };
-        const descriptionValidatable: Validatable = {
-            value: enteredDescription,
-            required: true,
-            minLength: 5
-        };
-        const peopleValidatable: Validatable = {
-            value: +enteredPeople,
-            required: true,
-            min: 1,
-            max: 5
-        };
-
-        const isValid = !validate(titleValidatable) || !validate(descriptionValidatable) || !validate(peopleValidatable)
+        const values = {
+            title: enteredTitle,
+            description: enteredDescription,
+            people: Number(enteredPeople)
+        }
+        const isValid = !validate(values, this.fieldsValidator);
 
         if (isValid) {
             alert('Invalid input, please try again!');
@@ -62,7 +72,7 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement>{
         this.peopleInputElement.value = '';
     }
 
-    @autoBind
+    @AutoBind
     private submitHandler(event: Event) {
         event.preventDefault();
         const userInput = this.gatherUserInput();
@@ -80,4 +90,5 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement>{
     }
 
     update(): void {}
+
 }
