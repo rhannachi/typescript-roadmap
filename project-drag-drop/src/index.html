@@ -12,7 +12,7 @@
 </head>
 <body>
 
-    <template id="project-input">
+    <template id="task-form-template">
         <form>
             <div class="form-control">
                 <label for="title">Title</label>
@@ -26,11 +26,11 @@
                 <label for="people">People</label>
                 <input type="number" id="people" step="1" min="0" max="10" />
             </div>
-            <button type="submit">ADD PROJECT</button>
+            <button type="submit">ADD TASKS</button>
         </form>
     </template>
 
-    <template id="single-project">
+    <template id="task-item-template">
         <li draggable="true">
             <h2></h2>
             <h3></h3>
@@ -38,7 +38,7 @@
         </li>
     </template>
 
-    <template id="project-list">
+    <template id="task-list-template">
         <section class="projects">
             <header>
                 <h2></h2>

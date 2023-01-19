@@ -1,11 +1,12 @@
 import { TaskModel } from "../models/index.js";
 import { Component } from "./component.js";
+import { ID_TASK_ITEM_TEMPLATE } from "../utils/index.js";
 
 export class Item extends Component<HTMLUListElement, HTMLLIElement> {
     private task: TaskModel;
 
     constructor(hostId: string, task: TaskModel) {
-        super('single-project', hostId, false, task.id);
+        super(ID_TASK_ITEM_TEMPLATE, hostId, false, task.id);
         this.task = task;
 
         this.configure();

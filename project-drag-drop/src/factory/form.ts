@@ -1,5 +1,5 @@
 import { Component } from "./component.js";
-import { Validatable, validate } from "../utils/validation.js";
+import {ID_HOST_ELEMENT, ID_TASK_FORM, ID_TASK_FORM_TEMPLATE, Validatable, validate} from "../utils/index.js";
 import { autoBind } from "../decorators/auto-bind.js";
 import { Subject } from "../observers/index.js";
 import { TaskModel } from "../models/index.js";
@@ -9,7 +9,7 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement>{
     descriptionInputElement: HTMLInputElement;
     peopleInputElement: HTMLInputElement;
     constructor(subject: Subject<TaskModel>) {
-        super('project-input', 'app', true, 'user-input')
+        super(ID_TASK_FORM_TEMPLATE, ID_HOST_ELEMENT, true, ID_TASK_FORM)
 
         this.subject = subject
 
