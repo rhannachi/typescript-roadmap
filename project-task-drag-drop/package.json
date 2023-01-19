@@ -1,0 +1,12 @@
+{
+  "private": true,
+  "name": "project-task-drag-drop",
+  "version": "1.1.2",
+  "author": "Ramzi <ramzi.hannachi1991@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "build": "tsc --build --force -w",
+    "copy-files": "copyfiles --error -u 1 -f src/**/*.html src/**/*.css dist",
+    "dev": "lite-server --baseDir='dist'"
+  }
+}
