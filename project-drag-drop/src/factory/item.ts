@@ -1,12 +1,12 @@
-import { Project } from "../models/index.js";
+import { TaskModel } from "../models/index.js";
 import { Component } from "./component.js";
 
 export class Item extends Component<HTMLUListElement, HTMLLIElement> {
-    private project: Project;
+    private task: TaskModel;
 
-    constructor(hostId: string, project: Project) {
-        super('single-project', hostId, false, project.id);
-        this.project = project;
+    constructor(hostId: string, task: TaskModel) {
+        super('single-project', hostId, false, task.id);
+        this.task = task;
 
         this.configure();
         this.renderContent();
@@ -15,8 +15,10 @@ export class Item extends Component<HTMLUListElement, HTMLLIElement> {
     configure() {}
 
     renderContent() {
-        this.element.querySelector('h2')!.textContent = this.project.title;
-        this.element.querySelector('h3')!.textContent = this.project.people.toString();
-        this.element.querySelector('p')!.textContent = this.project.description;
+        this.element.querySelector('h2')!.textContent = this.task.title;
+        this.element.querySelector('h3')!.textContent = this.task.people.toString();
+        this.element.querySelector('p')!.textContent = this.task.description;
     }
+
+    update(): void {}
 }

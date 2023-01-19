@@ -1,16 +1,17 @@
 import { Component } from "./component.js";
 import { Validatable, validate } from "../utils/validation.js";
 import { autoBind } from "../decorators/auto-bind.js";
-import ProjectState from "../state/index.js";
-
-const projectState = ProjectState.getInstance();
+import { Subject } from "../observers/index.js";
+import { TaskModel } from "../models/index.js";
 
 export class Form extends Component<HTMLDivElement, HTMLFormElement>{
     titleInputElement: HTMLInputElement;
     descriptionInputElement: HTMLInputElement;
     peopleInputElement: HTMLInputElement;
-    constructor() {
+    constructor(subject: Subject<TaskModel>) {
         super('project-input', 'app', true, 'user-input')
+
+        this.subject = subject
 
         this.titleInputElement = <HTMLInputElement>this.element.querySelector('#title');
         this.descriptionInputElement = <HTMLInputElement>this.element.querySelector('#description');
@@ -66,9 +67,17 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement>{
         event.preventDefault();
         const userInput = this.gatherUserInput();
         if (Array.isArray(userInput)) {
-            const [title, desc, people] = userInput;
-            projectState.addProject(title, desc, people);
+            const [title, description, people] = userInput;
+            this.subject.setState({
+                id: Math.random().toString(),
+                title,
+                description,
+                people,
+                status: 'active'
+            })
             this.clearInputs();
         }
     }
+
+    update(): void {}
 }

@@ -1,12 +1,12 @@
 
 const STATUS = ['active', 'finished'] as const
-export type ProjectStatus = typeof STATUS[number]
+export type TaskStatus = typeof STATUS[number]
 
-export interface Project {
+export interface TaskModel {
     id: string
     title: string,
     description: string,
     people: number,
-    status: ProjectStatus
+    status: TaskStatus
 }
 

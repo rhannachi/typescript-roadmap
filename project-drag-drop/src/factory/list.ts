@@ -1,49 +1,51 @@
 import { Component } from "./component.js";
 import { Item } from "./item.js";
-import ProjectState from "../state/index.js";
-import { Project, ProjectStatus } from "../models/index.js";
+import { TaskModel, TaskStatus } from "../models/index.js";
+import { Subject } from "../observers/index.js";
 
-const projectState = ProjectState.getInstance();
+export class List extends Component<HTMLDivElement, HTMLElement> {
+    private readonly status: TaskStatus
+    tasks: TaskModel[] = [];
 
-export class List extends Component<HTMLDivElement, HTMLElement>{
-    private readonly status: ProjectStatus
-    assignedProjects: Project[] = [];
-
-    constructor(status: ProjectStatus) {
+    constructor(status: TaskStatus, subject: Subject<TaskModel>) {
         super('project-list', 'app', false, `${status}-projects`);
+
+        this.subject = subject
+        this.subject.attach(this);
+
         this.status = status
 
         this.configure();
         this.renderContent();
     }
 
-    configure() {
-        projectState.receiveEvents((receivedProjects: Project[]) => {
-            this.assignedProjects = this.filterProjects(receivedProjects, this.status)
-            this.renderProjects();
-        });
-    }
+    configure() {}
 
     renderContent() {
         this.element.querySelector('ul')!.id = `${this.status}-projects-list`;
         this.element.querySelector('h2')!.textContent = this.status.toUpperCase() + ' PROJECTS';
     }
 
-    private filterProjects(projects:Project[], status: ProjectStatus): Project[] {
-        return projects.filter(project => {
+    private filterTasks(tasks: TaskModel[], status: TaskStatus): TaskModel[] {
+        return tasks.filter(task => {
             if (status === 'active') {
-                return project.status === 'active';
+                return task.status === 'active';
             }
-            return project.status === 'finished';
+            return task.status === 'finished';
         });
     }
 
-    private renderProjects() {
+    private renderTasks() {
         const listEl = <HTMLUListElement>document.getElementById(`${this.status}-projects-list`);
         listEl.innerHTML = '';
-        for (const project of this.assignedProjects) {
+        for (const task of this.tasks) {
             const hostId = this.element.querySelector('ul')!.id
-            new Item(hostId, project);
+            new Item(hostId, task);
         }
+    }
+
+    update(): void {
+        this.tasks = this.filterTasks(this.subject.getState(), this.status)
+        this.renderTasks();
     }
 }
