@@ -1,4 +1,4 @@
-### Start examples
+### Project Drag and Drop Tasks
 
 Run this command if you change the HTML file or the first time you run the project
 ```
@@ -10,9 +10,7 @@ Build examples
 $ npm run build
 ```
 
-Start example 1,2,...
+Start project
 ```
-$ npm run dev-1
-$ npm run dev-2
-...
+$ npm run dev
 ```

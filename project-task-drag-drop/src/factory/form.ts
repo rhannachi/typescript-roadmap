@@ -30,8 +30,6 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement> implements 
         this.peopleInputElement = <HTMLInputElement>this.element.querySelector('#people');
 
         this.configure();
-
-        console.log('fieldsValidator:', this.fieldsValidator)
     }
 
     setFieldsValidator(fieldValidators: FieldsValidatorRules) {
@@ -78,7 +76,7 @@ export class Form extends Component<HTMLDivElement, HTMLFormElement> implements 
         const userInput = this.gatherUserInput();
         if (Array.isArray(userInput)) {
             const [title, description, people] = userInput;
-            this.subject.setState({
+            this.subject.addObjectToState({
                 id: Math.random().toString(),
                 title,
                 description,

@@ -1,6 +1,6 @@
 import { Observer } from "./observer.js";
 
-export class Subject<T extends object> {
+export class Subject<T extends { id: string }> {
     private observers: Observer<T>[] = [];
     private state: T[] = [];
 
@@ -8,8 +8,18 @@ export class Subject<T extends object> {
         return this.state;
     }
 
-    setState(project: T) {
-        this.state = [...this.state, project];
+    addObjectToState(object: T) {
+        this.state.push(object)
+        this.notifyAllObservers()
+    }
+
+    setObjectFromState(id: string, newObject:T) {
+        this.state = this.state.map((object) => {
+            if (object.id === id){
+                return newObject
+            }
+            return object
+        })
         this.notifyAllObservers()
     }
 
