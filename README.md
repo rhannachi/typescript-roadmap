@@ -16,6 +16,7 @@ $ npm i
 * [Discriminated Unions](./advanced-types/src/example-5)
 * [Index Properties](./advanced-types/src/example-6)
 * [Enum](./advanced-types/src/example-7)
+* [Pick](./advanced-types/src/example-8)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)
