@@ -8,6 +8,12 @@ interface Todo {
     completed: boolean
 }
 
+// const todoR: Readonly<Todo> = {
+//     name: 'my trip',
+//     description: 'my description',
+//     completed: false
+// }
+
 const todoR: MyReadonly<Todo> = {
     name: 'my trip',
     description: 'my description',
