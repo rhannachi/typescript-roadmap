@@ -20,6 +20,7 @@ $ npm i
 * [Omit](./advanced-types/src/example-9)
 * [Readonly](./advanced-types/src/example-10)
 * [Exclude](./advanced-types/src/example-11)
+* [Includes Custom Type](./advanced-types/src/example-12)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)

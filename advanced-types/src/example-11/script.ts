@@ -4,7 +4,7 @@
 
 type ItemExcluded = MyExclude<'name' | 'description' | 'completed', 'name'>
 
-const itemExcluded: ItemExcluded = 'description'
+const itemExcluded: ItemExcluded = 'description' // => 'description' or 'completed'
 
 // ----------------- MyExclude -------------------
 
