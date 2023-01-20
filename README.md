@@ -22,6 +22,7 @@ $ npm i
 * [Readonly](./advanced-types/src/example-10)
 * [Exclude](./advanced-types/src/example-11)
 * [Extract](./advanced-types/src/example-15)
+* [Parameters](./advanced-types/src/example-16)
 * [Includes Custom Type](./advanced-types/src/example-12)
 * [First Custom Type](./advanced-types/src/example-13)
 
