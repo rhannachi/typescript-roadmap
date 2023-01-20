@@ -15,14 +15,15 @@ $ npm i
 * [Type Guards Example 2](./advanced-types/src/example-4)
 * [Discriminated Unions](./advanced-types/src/example-5)
 * [Index Properties](./advanced-types/src/example-6)
+* [Record](./advanced-types/src/example-14)
 * [Enum](./advanced-types/src/example-7)
 * [Pick](./advanced-types/src/example-8)
 * [Omit](./advanced-types/src/example-9)
 * [Readonly](./advanced-types/src/example-10)
 * [Exclude](./advanced-types/src/example-11)
+* [Extract](./advanced-types/src/example-15)
 * [Includes Custom Type](./advanced-types/src/example-12)
-* [FirstElement Custom Type](./advanced-types/src/example-13)
-* [Record](./advanced-types/src/example-14)
+* [First Custom Type](./advanced-types/src/example-13)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)

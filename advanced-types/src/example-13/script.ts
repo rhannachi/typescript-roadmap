@@ -2,9 +2,9 @@
  * FirstElement
  */
 
-const firstItem1: FirstElement<['name', 'description', 'completed']> = 'name'
-const firstItem2: FirstElement<['1', '2', '3']> = '1'
+const firstItem1: First<['name', 'description', 'completed']> = 'name'
+const firstItem2: First<['1', '2', '3']> = '1'
 
 // ----------------- MyExclude -------------------
 
-type FirstElement<T extends Array<string>> = T[0]
+type First<T extends Array<string>> = T[0]

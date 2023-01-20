@@ -3,9 +3,12 @@
  */
 
 // type ItemExcluded = Exclude<'name' | 'description' | 'completed', 'name'>
-type ItemExcluded = MyExclude<'name' | 'description' | 'completed', 'name'>
 
-const itemExcluded: ItemExcluded = 'description' // => 'description' or 'completed'
+type ItemExcluded1 = MyExclude<'name' | 'description' | 'completed', 'name'>
+type ItemExcluded2 = MyExclude<'1' | '2' | '3', '1' | '3'>
+
+const itemExcluded1: ItemExcluded1 = 'description' // => 'description' or 'completed'
+const itemExcluded2: ItemExcluded2 = '2' // => '2'
 
 // ----------------- MyExclude -------------------
 
