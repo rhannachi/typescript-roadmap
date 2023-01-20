@@ -17,6 +17,7 @@ $ npm i
 * [Index Properties](./advanced-types/src/example-6)
 * [Enum](./advanced-types/src/example-7)
 * [Pick](./advanced-types/src/example-8)
+* [Omit](./advanced-types/src/example-9)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)

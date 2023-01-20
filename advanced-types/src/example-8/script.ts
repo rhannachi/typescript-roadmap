@@ -8,15 +8,17 @@ interface Todo {
     completed: boolean
 }
 
-// type TodoCustom = Pick<Todo, 'name' | 'completed'>
-type TodoCustom = MyPick<Todo, 'name' | 'completed'>
+// type TodoPicked = Pick<Todo, 'name' | 'completed'>
+type TodoPicked = MyPick<Todo, 'name' | 'completed'>
 
-const todo: TodoCustom = {
+const todoPicked: TodoPicked = {
     name: 'my trip',
     completed: false,
 }
 
 // ----------------- MyPick -------------------
 
-type MyPick<T extends object, U extends keyof T> = { [P in U]: T[P] }
+type MyPick<T extends object, U extends keyof T> = {
+    [KEY in U]: T[KEY]
+}
 
