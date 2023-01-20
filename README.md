@@ -21,6 +21,7 @@ $ npm i
 * [Readonly](./advanced-types/src/example-10)
 * [Exclude](./advanced-types/src/example-11)
 * [Includes Custom Type](./advanced-types/src/example-12)
+* [FirstElement Custom Type](./advanced-types/src/example-13)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)

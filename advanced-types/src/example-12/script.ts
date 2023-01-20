@@ -1,5 +1,5 @@
 /**
- * Exclude
+ * Includes
  */
 
 type ItemIncludes1 = Includes<['name', 'description', 'completed'], 'name'> // => true
