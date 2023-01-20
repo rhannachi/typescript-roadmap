@@ -22,6 +22,8 @@
     "dev-13": "lite-server --baseDir='dist/example-13'",
     "dev-14": "lite-server --baseDir='dist/example-14'",
     "dev-15": "lite-server --baseDir='dist/example-15'",
-    "dev-16": "lite-server --baseDir='dist/example-16'"
+    "dev-16": "lite-server --baseDir='dist/example-16'",
+    "dev-17": "lite-server --baseDir='dist/example-17'",
+    "dev-18": "lite-server --baseDir='dist/example-18'"
   }
 }

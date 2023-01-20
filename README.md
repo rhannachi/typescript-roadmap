@@ -26,6 +26,7 @@ $ npm i
 * [ReturnType](./advanced-types/src/example-17)
 * [Includes Custom Type](./advanced-types/src/example-12)
 * [First Custom Type](./advanced-types/src/example-13)
+* [Conditional Type](./advanced-types/src/example-18)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)
