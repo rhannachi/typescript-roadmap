@@ -18,6 +18,7 @@ $ npm i
 * [Enum](./advanced-types/src/example-7)
 * [Pick](./advanced-types/src/example-8)
 * [Omit](./advanced-types/src/example-9)
+* [Readonly](./advanced-types/src/example-10)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)
