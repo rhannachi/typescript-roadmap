@@ -22,6 +22,7 @@ $ npm i
 * [Exclude](./advanced-types/src/example-11)
 * [Includes Custom Type](./advanced-types/src/example-12)
 * [FirstElement Custom Type](./advanced-types/src/example-13)
+* [Record](./advanced-types/src/example-14)
 
 #### Decorators
 * [Decorator](./decorators/src/example-1)
