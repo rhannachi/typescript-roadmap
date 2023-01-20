@@ -7,52 +7,56 @@ interface ValidatorConfig {
     [validatableProp: string]: string[];
 }
 
-let registeredValidators: ValidatorConfig = {};
-
-function Required(_target: any, propName: string) {
-    registeredValidators = {
-        ...registeredValidators,
-        [propName]: ['required']
-    };
+function Required(target: Course, propName: string) {
+    target.setRegisteredValidators({[propName]: ['required']})
 }
 
-function PositiveNumber(_target: any, propName: string) {
-    registeredValidators = {
-        ...registeredValidators,
-        [propName]: ['positive']
-    };
+function PositiveNumber(target: Course, propName: string) {
+    target.setRegisteredValidators({[propName]: ['positive']})
 }
 
-function validate<T extends Record<string, any>>(obj: T) {
-    if (!registeredValidators) {
-        return true;
+abstract class Validation {
+    private registeredValidators: ValidatorConfig | undefined
+
+     setRegisteredValidators(validator: ValidatorConfig) {
+        this.registeredValidators = {
+            ...this.registeredValidators,
+            ...validator
+        };
     }
 
-    let isValid = true;
+    validate<T extends Record<string, any>>(obj: T) {
+        if (!this.registeredValidators) {
+            return true;
+        }
 
-    for (const [prop, validators] of Object.entries(registeredValidators)) {
-        for (const validator of validators) {
-            switch (validator) {
-                case 'required':
-                    isValid = isValid && !!obj[prop];
-                    break;
-                case 'positive':
-                    isValid = isValid && obj[prop] > 0;
-                    break;
+        let isValid = true;
+
+        for (const [prop, validators] of Object.entries(this.registeredValidators)) {
+            for (const validator of validators) {
+                switch (validator) {
+                    case 'required':
+                        isValid = isValid && !!obj[prop];
+                        break;
+                    case 'positive':
+                        isValid = isValid && obj[prop] > 0;
+                        break;
+                }
             }
         }
-     }
 
-    return isValid;
+        return isValid;
+    }
 }
 
-class Course {
+class Course extends Validation {
     @Required
     title: string;
     @PositiveNumber
     price: number;
 
     constructor(t: string, p: number) {
+        super()
         this.title = t;
         this.price = p;
     }
@@ -70,7 +74,7 @@ courseForm.addEventListener('submit', event => {
 
     const createdCourse = new Course(title, price);
 
-    if (!validate<Course>(createdCourse)) {
+    if (!createdCourse.validate<Course>(createdCourse)) {
         alert('Invalid input, please try again!');
         return;
     }

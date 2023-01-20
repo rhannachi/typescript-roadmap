@@ -2,6 +2,8 @@
  *  Index Properties
  */
 
+// type ErrorCustom = Record<string, string>
+
 interface ErrorCustom {
   [prop: string]: string;
 }
