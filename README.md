@@ -6,6 +6,9 @@ $ nvm use
 $ npm i
 ```
 
+### Project Task Drag and Drop
+The application of Observer and Factory design patterns through an application of drag and drop [here](./project-task-drag-drop)
+
 ### Examples:
 
 #### Advanced Types
@@ -43,3 +46,6 @@ $ npm i
 * [Class](./classes-interfaces/src/example-1)
 * [Abstract Class](./classes-interfaces/src/example-2)
 * [Interface](./classes-interfaces/src/example-3)
+
+#### Asynchronous
+* [Async with for, map and reduce](./asynchronous/src/example-1)
