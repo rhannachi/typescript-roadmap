@@ -9,23 +9,52 @@ export const fetchWithFor = async () => {
     for (const item of list) {
         const startItem = Date.now();
         const user = await fetchUser(2);
-        users.push(user)
+        // transform user
+        users.push({
+            ...user,
+            username: 'Luc',
+        })
         logger("fetchWithFor", Date.now() - startItem, item);
     }
-    logger("fetchWithFor", Date.now() - start);
+    logger("-> fetchWithFor", Date.now() - start);
     return users
 }
 
 // -------------------- Map ------------------
-export async function fetchWithMap() {
+
+export const fetchWithMap = async () => {
+    const start = Date.now();
+    const promises = list.map(async (item) => {
+        const startItem = Date.now();
+        let user = await fetchUser(2);
+        // transform users
+        user = {
+            ...user,
+            username: 'Luc',
+        }
+        logger("fetchWithMap", Date.now() - startItem, item);
+        return user
+    });
+    const users = await Promise.all(promises);
+    logger("-> fetchWithMap", Date.now() - start);
+    return users
+}
+
+export const fetchWithMap2 = async () => {
     const start = Date.now();
     const promises = list.map((item) => {
         const startItem = Date.now();
         const userPromise = fetchUser(2);
-        logger("fetchWithMap", Date.now() - startItem, item);
+        logger("fetchWithMapOp", Date.now() - startItem, item);
         return userPromise
     });
-    const users = await Promise.all(promises);
-    logger("fetchWithMap", Date.now() - start);
+    let users = await Promise.all(promises);
+    // transform users
+    users = users.map((user: User) =>({
+        ...user,
+        username: 'Luc',
+    }))
+    //
+    logger("-> fetchWithMapOp", Date.now() - start);
     return users
 }

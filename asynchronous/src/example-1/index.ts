@@ -1,4 +1,4 @@
-import {fetchWithFor, fetchWithMap } from "./services.js";
+import {fetchWithFor, fetchWithMap, fetchWithMap2} from "./services.js";
 
 // ---------------------------- For -------------------------------
 const onClickFetchWithFor = async (event: Event) => {
@@ -29,13 +29,25 @@ const onClickFetchWithMap = async (event: Event) => {
     buttonFetchWithMap!.innerText = "Fetch users with Map";
 }
 
+const onClickFetchWithMap2 = async (event: Event) => {
+    event.preventDefault();
+    buttonFetchWithMap2!.disabled = true;
+    buttonFetchWithMap2!.innerText = "Loading ....";
+    console.log("------------Start--------------")
+    const users = await fetchWithMap2()
+    console.log({ users })
+    console.log("------------End--------------")
+    buttonFetchWithMap2!.disabled = false;
+    buttonFetchWithMap2!.innerText = "Fetch users with Map 2";
+}
+
 
 // ----------------------------------------------------------
 
 const buttonFetchWithFor = <HTMLButtonElement>document.getElementById("id-button-fetch-with-for");
-// const buttonFetchWithForEach = <HTMLButtonElement>document.getElementById("id-button-fetch-with-foreach");
 const buttonFetchWithMap = <HTMLButtonElement>document.getElementById("id-button-fetch-with-map");
+const buttonFetchWithMap2 = <HTMLButtonElement>document.getElementById("id-button-fetch-with-map-2");
 
 buttonFetchWithFor!.onclick = onClickFetchWithFor;
-// buttonFetchWithForEach!.onclick = onClickFetchWithForEach;
 buttonFetchWithMap!.onclick = onClickFetchWithMap;
+buttonFetchWithMap2!.onclick = onClickFetchWithMap2;
