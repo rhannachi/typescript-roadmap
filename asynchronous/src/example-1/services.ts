@@ -58,3 +58,24 @@ export const fetchWithMap2 = async () => {
     logger("-> fetchWithMapOp", Date.now() - start);
     return users
 }
+
+// -------------------- Reduce ------------------
+
+export const fetchWithReduce = async () => {
+    const start = Date.now();
+    const users = await list.reduce(async (accumulatorPromise, item) => {
+        const startItem = Date.now();
+        const accumulator = await accumulatorPromise
+        let user = await fetchUser(2);
+        // transform users
+        user = {
+            ...user,
+            username: 'Luc',
+        }
+        accumulator.push(user)
+        logger("fetchWithReduce", Date.now() - startItem, item);
+        return accumulator
+    }, Promise.resolve<User[]>([]));
+    logger("-> fetchWithReduce", Date.now() - start);
+    return users
+}

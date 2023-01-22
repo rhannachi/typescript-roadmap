@@ -1,4 +1,4 @@
-import {fetchWithFor, fetchWithMap, fetchWithMap2} from "./services.js";
+import {fetchWithFor, fetchWithMap, fetchWithMap2, fetchWithReduce} from "./services.js";
 
 // ---------------------------- For -------------------------------
 const onClickFetchWithFor = async (event: Event) => {
@@ -12,9 +12,6 @@ const onClickFetchWithFor = async (event: Event) => {
     buttonFetchWithFor!.disabled = false;
     buttonFetchWithFor!.innerText = "Fetch users with For";
 }
-
-// ---------------------------- Reduce -------------------------------
-
 
 // ----------------------------- Map ------------------------------
 const onClickFetchWithMap = async (event: Event) => {
@@ -41,13 +38,29 @@ const onClickFetchWithMap2 = async (event: Event) => {
     buttonFetchWithMap2!.innerText = "Fetch users with Map 2";
 }
 
+// ---------------------------- Reduce -------------------------------
+
+const onClickFetchWithReduce = async (event: Event) => {
+    event.preventDefault();
+    buttonFetchWithReduce!.disabled = true;
+    buttonFetchWithReduce!.innerText = "Loading ....";
+    console.log("------------Start--------------")
+    const users = await fetchWithReduce()
+    console.log({ users })
+    console.log("------------End--------------")
+    buttonFetchWithReduce!.disabled = false;
+    buttonFetchWithReduce!.innerText = "Fetch users with Reduce";
+}
+
 
 // ----------------------------------------------------------
 
 const buttonFetchWithFor = <HTMLButtonElement>document.getElementById("id-button-fetch-with-for");
 const buttonFetchWithMap = <HTMLButtonElement>document.getElementById("id-button-fetch-with-map");
 const buttonFetchWithMap2 = <HTMLButtonElement>document.getElementById("id-button-fetch-with-map-2");
+const buttonFetchWithReduce = <HTMLButtonElement>document.getElementById("id-button-fetch-with-reduce");
 
 buttonFetchWithFor!.onclick = onClickFetchWithFor;
 buttonFetchWithMap!.onclick = onClickFetchWithMap;
 buttonFetchWithMap2!.onclick = onClickFetchWithMap2;
+buttonFetchWithReduce!.onclick = onClickFetchWithReduce;
