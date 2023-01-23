@@ -11,6 +11,12 @@
     },
     {
       "path": "./generics"
+    },
+    {
+      "path": "./asynchronous"
+    },
+    {
+      "path": "./project-task-drag-drop"
     }
   ],
   "files": [],
