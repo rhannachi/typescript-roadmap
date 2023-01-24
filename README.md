@@ -11,6 +11,9 @@ The application of Observer and Factory design patterns through an application o
 
 ### Examples:
 
+### design patterns
+* [Decorator](./design-pattern/decorator)
+
 #### Advanced Types
 * [Intersection type (object)](./advanced-types/src/example-1)
 * [Intersection type](./advanced-types/src/example-2)
