@@ -1,8 +1,23 @@
 ## Decorator
 
+![](./assets/architecture.png)
+
 ### Architecture
 ```
-
+src
+├── decorator
+│   ├── index.ts
+│   └── ingredient.ts
+├── desserts
+│   ├── crepe.ts
+│   ├── index.ts
+│   └── waffle.ts
+├── dessert.ts
+├── index.ts
+└── ingredients
+    ├── chocolate.ts
+    ├── index.ts
+    └── whippedCream.ts
 ```
 
 ### Run project
