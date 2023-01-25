@@ -52,4 +52,5 @@ $ npm i
 ### design patterns
 * [Decorator (Dessert)](./design-pattern/decorator-dessert)
 * [Decorator (Pizza)](./design-pattern/decorator-pizza)
+* [Factory (Military)](./design-pattern/factory-military)
 
