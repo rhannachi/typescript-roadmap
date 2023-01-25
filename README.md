@@ -53,4 +53,5 @@ $ npm i
 * [Decorator (Dessert)](./design-pattern/decorator-dessert)
 * [Decorator (Pizza)](./design-pattern/decorator-pizza)
 * [Factory (Military)](./design-pattern/factory-military)
+* [Factory (Army)](./design-pattern/factory-army)
 

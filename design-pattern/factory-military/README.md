@@ -1,8 +1,28 @@
 ## Decorator
 
-un exemple d'utilisation du desing pattern Factory pour créer une unité de char, une unité d'infanterie et une unité de l'armée de l'air, et appeler la méthode d'attaque de chaque unité
-
 ![](./assets/architecture.png)
+
+```
+src
+├── factories
+│   ├── airForceFactory.ts
+│   ├── factory.ts
+│   ├── index.ts
+│   └── marineFactory.ts
+├── index.ts
+└── units
+    ├── airForce
+    │   ├── captainAirForce.ts
+    │   ├── index.ts
+    │   └── majorAirForce.ts
+    ├── index.ts
+    ├── marine
+    │   ├── captainMarine.ts
+    │   ├── index.ts
+    │   └── majorMarine.ts
+    └── unit.ts
+
+```
 
 ### Run project
 
