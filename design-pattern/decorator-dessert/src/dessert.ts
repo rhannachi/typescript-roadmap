@@ -1,6 +1,6 @@
 export abstract class Dessert {
-    private label?: string
-    private price?: number;
+    abstract label: string
+    abstract price: number;
 
     getLabel() {
         return this.label;

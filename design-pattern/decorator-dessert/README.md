@@ -6,8 +6,7 @@
 ```
 src
 ├── decorator
-│   ├── index.ts
-│   └── ingredient.ts
+│   └── dessert.ts
 ├── desserts
 │   ├── crepe.ts
 │   ├── index.ts
@@ -18,6 +17,7 @@ src
     ├── chocolate.ts
     ├── index.ts
     └── whippedCream.ts
+
 ```
 
 ### Run project
