@@ -50,5 +50,5 @@ $ npm i
 * [Async with for, map and reduce](./asynchronous/src/example-1)
 
 ### design patterns
-* [Decorator](./design-pattern/decorator)
+* [Decorator (Dessert)](./design-pattern/decorator-dessert)
 
