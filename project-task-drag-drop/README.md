@@ -1,6 +1,8 @@
-### Project Drag and Drop Tasks
+## Project Drag and Drop Tasks
 
-## Architecture
+![](./assets/architecture.png)
+
+### Architecture
 ```
 src
 ├── decorators
@@ -30,7 +32,7 @@ src
 
 ```
 
-## Run project
+### Run project
 
 Run this command if you change the HTML file or the first time you run the project
 ```

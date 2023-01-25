@@ -7,12 +7,8 @@ $ npm i
 ```
 
 ### Project Task Drag and Drop
-The application of Observer and Factory design patterns through an application of drag and drop [here](./project-task-drag-drop)
-
+[here](./project-task-drag-drop) Small drag and drop application that illustrates the use of observer patterns and factory
 ### Examples:
-
-### design patterns
-* [Decorator](./design-pattern/decorator)
 
 #### Advanced Types
 * [Intersection type (object)](./advanced-types/src/example-1)
@@ -52,3 +48,7 @@ The application of Observer and Factory design patterns through an application o
 
 #### Asynchronous
 * [Async with for, map and reduce](./asynchronous/src/example-1)
+
+### design patterns
+* [Decorator](./design-pattern/decorator)
+
