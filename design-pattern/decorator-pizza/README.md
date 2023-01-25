@@ -7,7 +7,7 @@ Les prix de chaque pizza sont affichés pour vérifier que les prix sont correct
 
 ### Architecture
 ```
-src/
+src
 ├── decorator
 │   └── pizza.ts
 ├── index.ts
@@ -18,7 +18,6 @@ src/
 ├── pizzas
 │   └── margherita.ts
 └── pizza.ts
-
 ```
 
 ### Run project

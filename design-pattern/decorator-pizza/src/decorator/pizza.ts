@@ -2,7 +2,7 @@ import {Pizza} from "../pizza.js";
 
 export abstract class PizzaDecorator extends Pizza {
     protected pizza: Pizza;
-    constructor(pizza: Pizza) {
+    protected constructor(pizza: Pizza) {
         super()
         this.pizza = pizza;
     }
