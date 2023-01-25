@@ -2,27 +2,19 @@ import { DessertDecorator } from "../decorator/dessert.js";
 import { Dessert } from "../dessert.js";
 
 export class WhippedCream extends DessertDecorator {
-    private readonly priceMargin = 0.5
-
+    label = "Whipped Cream"
+    price = 0.5
     constructor(d: Dessert) {
-        super()
-        this.dessert = d;
+        super(d)
     }
 
     getLabel() {
-        const label = this.dessert?.getLabel()
-        if (label) {
-            return `${label}, whipped cream`
-        }
-        return undefined;
+        const label = this.dessert.getLabel()
+        return `${label}, ${this.label}`
     }
 
     getPrice() {
-        const price = this.dessert?.getPrice()
-        if (!!price) {
-            return price + this.priceMargin
-        }
-        return undefined
+        return this.dessert.getPrice() + this.price
     }
 }
 
