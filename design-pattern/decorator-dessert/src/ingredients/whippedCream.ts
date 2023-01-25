@@ -1,7 +1,7 @@
-import { Ingredient } from "../decorator/index.js";
+import { DessertDecorator } from "../decorator/dessert.js";
 import { Dessert } from "../dessert.js";
 
-export class WhippedCream extends Ingredient {
+export class WhippedCream extends DessertDecorator {
     private readonly priceMargin = 0.5
 
     constructor(d: Dessert) {
